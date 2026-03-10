@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Bank
 
-## Getting Started
+A sleek, dark-themed portfolio showcasing a curated collection of interactive web experiences — from physics simulations and music tools to type racing and memory games.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **10 Interactive Projects** — simulations, tools, games, and educational apps
+- **Category Filtering** — browse by Simulation, Education, Tool, or Game
+- **3D Tilt Cards** — cards respond to cursor position with perspective transforms
+- **Parallax Background** — subtle dot grid that shifts with mouse movement
+- **Keyboard Shortcuts** — press `?` to view; number keys open projects directly; arrows cycle filters
+- **Dark Aesthetic** — fully dark UI with accent glow effects and glassmorphism
+- **Mobile Responsive** — adaptive layout from large displays to phones
+- **SEO Optimised** — Open Graph, Twitter Cards, schema.org JSON-LD, sitemap, robots.txt
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🗂️ Projects
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| # | Project | Category |
+|---|---------|----------|
+| 1 | [Number Learn Studio](https://number-learn.xyz/) | Education |
+| 2 | [Elements](https://elements-flax.vercel.app/) | Education |
+| 3 | [Three-Body Problem Simulator](https://three-body-problem-ivory.vercel.app/) | Simulation |
+| 4 | [Pitch Studio](https://pitch-tune-studio.vercel.app/) | Tool |
+| 5 | [Typr](https://typr-beta.vercel.app/) | Game |
+| 6 | [Game of Life](https://game-of-life-alpha-liart.vercel.app/) | Simulation |
+| 7 | [Sequence Memory](https://sequence-memory.vercel.app/) | Game |
+| 8 | [Rain Simulation](https://rain-sim-nu.vercel.app/) | Simulation |
+| 9 | [Meteor Impact Simulator](https://meteor-sim.vercel.app/) | Simulation |
+| 10 | [Emoji Explorer](https://emoji-explorer-gray.vercel.app/) | Tool |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⌨️ Keyboard Shortcuts
 
-## Learn More
+| Key | Action |
+|-----|--------|
+| `?` | Toggle shortcuts modal |
+| `1` – `0` | Open project 1 – 10 |
+| `←` / `→` | Cycle category filters |
+| `Esc` | Close modal |
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js 15** — App Router, TypeScript
+- **Framer Motion** — staggered animations and layout transitions
+- **Vanilla CSS** — custom properties design system, no utility frameworks
+- **Vercel** — deployment platform
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👤 Author
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built by [Henry Tolenaar](https://github.com/henrytolenaar)

@@ -1,66 +1,152 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { AnimatePresence, LayoutGroup } from "framer-motion";
+import { projects, categories, type Category } from "@/data/projects";
+import Background from "@/components/Background";
+import ProjectCard from "@/components/ProjectCard";
+import KeyboardShortcuts from "@/components/KeyboardShortcuts";
 
 export default function Home() {
+  const [activeCategory, setActiveCategory] = useState<Category>("All");
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
+
+  const filtered =
+    activeCategory === "All"
+      ? projects
+      : projects.filter((p) => p.category === activeCategory);
+
+  const cycleCategoryBy = useCallback(
+    (direction: number) => {
+      const idx = categories.indexOf(activeCategory);
+      const next = (idx + direction + categories.length) % categories.length;
+      setActiveCategory(categories[next]);
+    },
+    [activeCategory]
+  );
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable
+      ) {
+        return;
+      }
+
+      switch (e.key) {
+        case "?":
+          e.preventDefault();
+          setShortcutsOpen((prev) => !prev);
+          break;
+        case "Escape":
+          e.preventDefault();
+          setShortcutsOpen(false);
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          cycleCategoryBy(-1);
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          cycleCategoryBy(1);
+          break;
+        default: {
+          // Number keys 1-9, 0 (0 = project 10)
+          const num = parseInt(e.key, 10);
+          if (!isNaN(num)) {
+            const projectIndex = num === 0 ? 9 : num - 1;
+            const project = projects[projectIndex];
+            if (project) {
+              e.preventDefault();
+              window.open(project.url, "_blank", "noopener,noreferrer");
+            }
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [cycleCategoryBy]);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
+    <>
+      <Background />
+
+      <main className="main">
+        <div className="container">
+          {/* Hero */}
+          <header className="hero">
+            <h1 className="hero__title">
+              Project <span className="hero__accent">Bank</span>
+            </h1>
+            <p className="hero__subtitle">
+              A curated collection of interactive simulations, tools, games, and educational experiences.
+            </p>
+            <p className="hero__shortcut-hint">
+              Press <kbd className="kbd">?</kbd> for keyboard shortcuts
+            </p>
+          </header>
+
+          {/* Category Filters */}
+          <nav className="filters" aria-label="Filter projects by category">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                className={`filter-btn${activeCategory === cat ? " filter-btn--active" : ""}`}
+                onClick={() => setActiveCategory(cat)}
+                aria-pressed={activeCategory === cat}
+              >
+                {cat}
+                {cat !== "All" && (
+                  <> ({projects.filter((p) => p.category === cat).length})</>
+                )}
+              </button>
+            ))}
+          </nav>
+
+          {/* Project Grid */}
+          <LayoutGroup>
+            <div className="project-grid">
+              <AnimatePresence mode="popLayout">
+                {filtered.map((project, i) => (
+                  <ProjectCard key={project.id} project={project} index={i} />
+                ))}
+              </AnimatePresence>
+            </div>
+          </LayoutGroup>
+
+          {filtered.length === 0 && (
+            <div className="empty-state">
+              <div className="empty-state__icon">🔍</div>
+              <p className="empty-state__text">No projects in this category.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <footer className="footer">
+          <div className="container">
+            Built by{" "}
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+              href="https://github.com/henrytolenaar"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+              Henry Tolenaar
+            </a>
+          </div>
+        </footer>
       </main>
-    </div>
+
+      {/* Keyboard Shortcuts Modal */}
+      <KeyboardShortcuts
+        isOpen={shortcutsOpen}
+        onClose={() => setShortcutsOpen(false)}
+      />
+    </>
   );
 }
