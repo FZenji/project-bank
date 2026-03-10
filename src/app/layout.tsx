@@ -8,7 +8,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const siteUrl = "https://project-bank.vercel.app";
+const siteUrl = "https://project-bank-ht.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

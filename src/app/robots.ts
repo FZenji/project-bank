@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://project-bank.vercel.app/sitemap.xml",
+    sitemap: "https://project-bank-ht.vercel.app/sitemap.xml",
   };
 }
